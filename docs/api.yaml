@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Distributed File Storage API
+  version: 1.0.0
+paths:
+  /upload:
+    post:
+      summary: Upload a file
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file_id:
+                    type: string
+  /file:
+    get:
+      summary: Get uploaded file data
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: File ID
+      responses:
+        '200':
+          description: File data retrieved
+  /download:
+    get:
+      summary: Download a file by ID
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+          description: File ID
+      responses:
+        '200':
+          description: File downloaded successfully
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
